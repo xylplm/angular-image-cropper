@@ -53,7 +53,10 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/demo-app",
+            "outputPath": {
+              "base": "dist/demo-app",
+              "browser": "."
+            },
             "index": "src/index.html",
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
@@ -69,6 +72,7 @@
           },
           "configurations": {
             "production": {
+              "outputHashing": "all",
               "budgets": [
                 {
                   "type": "initial",
@@ -80,8 +84,7 @@
                   "maximumWarning": "8kb",
                   "maximumError": "10kb"
                 }
-              ],
-              "outputHashing": "all"
+              ]
             },
             "development": {
               "optimization": false,
