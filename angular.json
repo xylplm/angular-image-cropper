@@ -27,11 +27,7 @@
         "test": {
           "builder": "@angular-devkit/build-angular:jest",
           "options": {
-            "tsConfig": "projects/angular-image-cropper/tsconfig.spec.json",
-            "polyfills": [
-              "zone.js",
-              "zone.js/testing"
-            ]
+            "tsConfig": "projects/angular-image-cropper/tsconfig.spec.json"
           }
         }
       }
@@ -54,7 +50,6 @@
               "base": "dist/demo-app"
             },
             "index": "src/index.html",
-            "polyfills": ["zone.js"],
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [

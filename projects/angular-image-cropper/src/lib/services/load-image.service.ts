@@ -58,7 +58,7 @@ export class LoadImageService {
   private async loadImageFromArrayBuffer(arrayBuffer: ArrayBufferLike, options: LoadImageOptions, imageType?: string): Promise<LoadedImage> {
     const res = await new Promise<LoadImageArrayBuffer>(async (resolve, reject) => {
       try {
-        const blob = new Blob([arrayBuffer], imageType ? {type: imageType} : undefined);
+        const blob = new Blob([arrayBuffer as ArrayBuffer], imageType ? {type: imageType} : undefined);
         const objectUrl = URL.createObjectURL(blob);
         const originalImage = new Image();
         const isSvg = imageType === 'image/svg+xml';
