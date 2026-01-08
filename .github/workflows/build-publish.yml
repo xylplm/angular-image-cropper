@@ -31,8 +31,8 @@ jobs:
       - name: Get version from package.json
         id: version
         run: |
-          VERSION=$(jq -r '.version' projects/angular-image-cropper/package.json)
-          echo "VERSION=$VERSION" >> $GITHUB_ENV
+            VERSION=$(jq -r '.version' ./projects/angular-image-cropper/package.json)
+            echo "VERSION=$VERSION" >> $GITHUB_ENV
 
       - name: Build Angular library
         run: npm run lib:build
