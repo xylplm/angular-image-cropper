@@ -43,12 +43,11 @@ import {
 } from '../utils/cropper-position.utils';
 
 @Component({
-  selector: 'image-cropper',
-  templateUrl: './image-cropper.component.html',
-  styleUrls: ['./image-cropper.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
-  imports: [NgIf],
+    selector: 'image-cropper',
+    templateUrl: './image-cropper.component.html',
+    styleUrls: ['./image-cropper.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [NgIf]
 })
 export class ImageCropperComponent implements OnChanges, OnInit, OnDestroy {
 
