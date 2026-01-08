@@ -8,7 +8,7 @@ on:
 
 permissions:
   id-token: write  # Required for OIDC
-  contents: read
+  contents: write  # Required for creating releases
 
 jobs:
   build:
@@ -37,3 +37,17 @@ jobs:
       - name: Publish package to NPM with OIDC
         working-directory: ./dist/angular-image-cropper
         run: npm publish --access public
+
+      - name: Create GitHub Release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref_name }}
+          body: |
+            ## Changes in this Release
+            
+            For detailed changes, please refer to the [CHANGELOG](https://github.com/${{ github.repository }}/blob/master/CHANGELOG.md).
+          draft: false
+          prerelease: false
