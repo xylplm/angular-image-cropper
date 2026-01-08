@@ -2,17 +2,10 @@ name: Build and Publish package
 
 on:
   workflow_dispatch:
-  push:
-    tags:
-      - '*'
 
 permissions:
   id-token: write  # Required for OIDC
   contents: write  # Required for creating releases
-
-concurrency:
-  group: "publish"
-  cancel-in-progress: true
 
 jobs:
   build:
