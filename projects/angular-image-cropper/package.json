@@ -1,8 +1,17 @@
 {
   "name": "@luoxiao123/angular-image-cropper",
   "version": "9.1.5",
-  "description": "An image cropper for Angular",
-  "author": "Martijn Willekens",
+  "description": "An image cropper components library for Angular applications",
+  "type": "module",
+  "keywords": [
+    "angular",
+    "ionic",
+    "ionic-angular",
+    "cropper",
+    "image cropper"
+  ],
+  "author": "xylplm",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/xylplm/angular-image-cropper.git"
@@ -11,19 +20,13 @@
     "url": "https://github.com/xylplm/angular-image-cropper/issues"
   },
   "homepage": "https://github.com/xylplm/angular-image-cropper",
-  "keywords": [
-    "angular",
-    "angular 17",
-    "angular 18",
-    "angular 19",
-    "ionic",
-    "ionic-angular",
-    "cropper",
-    "image cropper"
-  ],
-  "license": "MIT",
   "peerDependencies": {
-    "@angular/common": ">=17.3.0",
-    "@angular/core": ">=17.3.0"
+    "@angular/common": "20 - 21",
+    "@angular/core": "20 - 21"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org",
+    "access": "public",
+    "provenance": true
   }
 }
