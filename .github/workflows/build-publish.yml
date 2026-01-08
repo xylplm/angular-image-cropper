@@ -37,9 +37,9 @@ jobs:
       - name: Build Angular library
         run: npm run lib:build
 
-      # - name: Publish package to NPM with OIDC
-      #   working-directory: ./dist/angular-image-cropper
-      #   run: npm publish --access public
+      - name: Publish package to NPM with OIDC
+        working-directory: ./dist/angular-image-cropper
+        run: npm publish --access public
 
       - name: Create GitHub Release
         uses: actions/create-release@v1
