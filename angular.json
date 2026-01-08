@@ -57,6 +57,7 @@
               "base": "dist/demo-app",
               "browser": "."
             },
+            "baseHref": "/angular-image-cropper/",
             "index": "src/index.html",
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
