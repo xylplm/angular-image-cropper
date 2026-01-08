@@ -17,12 +17,40 @@ body, html {
   text-align: center;
   margin-bottom: 24px;
   padding: 16px 0 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
 
   h1 {
     font-size: 28px;
     color: #1f2937;
     margin: 0;
     font-weight: 600;
+  }
+
+  .repo-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #f0f2f5;
+    color: #1f2937;
+    transition: all 0.3s ease;
+    text-decoration: none;
+
+    svg {
+      width: 24px;
+      height: 24px;
+    }
+
+    &:hover {
+      background: #007bff;
+      color: white;
+      transform: scale(1.1);
+    }
   }
 }
 
@@ -310,6 +338,7 @@ image-cropper {
 
     &[type="number"] {
       -moz-appearance: textfield;
+      appearance: textfield;
     }
   }
 }
@@ -340,6 +369,7 @@ image-cropper {
 
     &[type="number"] {
       -moz-appearance: textfield;
+      appearance: textfield;
     }
   }
 }

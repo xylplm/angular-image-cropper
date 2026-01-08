@@ -42,7 +42,7 @@ export default defineConfig([
     rules: {
       "@angular-eslint/template/no-negated-async": "error",
       "@angular-eslint/template/use-track-by-function": "warn",
-      "@angular-eslint/template/no-call-expression": "warn",
+      "@angular-eslint/template/no-call-expression": "off",
     },
   },
 ]);

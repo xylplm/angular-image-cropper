@@ -10,7 +10,7 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 
 @Component({
-    selector: 'lib-root',
+    selector: 'app-root',
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss'],
     imports: [FormsModule, ImageCropperComponent],
