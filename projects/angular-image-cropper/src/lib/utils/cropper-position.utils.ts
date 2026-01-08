@@ -3,6 +3,10 @@ import { CropperState } from '../component/cropper.state';
 import { BasicEvent } from '../interfaces/basic-event.interface';
 
 export function checkCropperPosition(cropperPosition: CropperPosition, cropperState: CropperState, maintainSize: boolean): CropperPosition {
+  // 如果 maxSize 无效，返回安全的默认位置
+  if (!cropperState.maxSize() || cropperState.maxSize().width <= 0 || cropperState.maxSize().height <= 0) {
+    return { x1: 0, x2: 0, y1: 0, y2: 0 };
+  }
   cropperPosition = checkCropperSizeRestriction(cropperPosition, cropperState);
   return checkCropperWithinMaxSizeBounds(cropperPosition, cropperState, maintainSize);
 }
@@ -186,6 +190,10 @@ export function checkAspectRatio(position: string, cropperPosition: CropperPosit
         cropperPosition.x2 -= (overflowY * cropperState.options.aspectRatio) > overflowX ? (overflowY * cropperState.options.aspectRatio) : overflowX;
         cropperPosition.y2 -= (overflowY * cropperState.options.aspectRatio) > overflowX ? overflowY : (overflowX / cropperState.options.aspectRatio);
       }
+      // Ensure y2 is within bounds
+      if (cropperPosition.y2 > cropperState.maxSize().height) {
+        cropperPosition.y2 = cropperState.maxSize().height;
+      }
       break;
     case 'topleft':
       cropperPosition.y1 = cropperPosition.y2 - (cropperPosition.x2 - cropperPosition.x1) / cropperState.options.aspectRatio;
@@ -214,6 +222,10 @@ export function checkAspectRatio(position: string, cropperPosition: CropperPosit
         cropperPosition.x2 -= (overflowY * cropperState.options.aspectRatio) > overflowX ? (overflowY * cropperState.options.aspectRatio) : overflowX;
         cropperPosition.y2 -= (overflowY * cropperState.options.aspectRatio) > overflowX ? overflowY : overflowX / cropperState.options.aspectRatio;
       }
+      // Ensure y2 is within bounds
+      if (cropperPosition.y2 > cropperState.maxSize().height) {
+        cropperPosition.y2 = cropperState.maxSize().height;
+      }
       break;
     case 'left':
     case 'bottomleft':
@@ -223,6 +235,10 @@ export function checkAspectRatio(position: string, cropperPosition: CropperPosit
       if (overflowX > 0 || overflowY > 0) {
         cropperPosition.x1 += (overflowY * cropperState.options.aspectRatio) > overflowX ? (overflowY * cropperState.options.aspectRatio) : overflowX;
         cropperPosition.y2 -= (overflowY * cropperState.options.aspectRatio) > overflowX ? overflowY : overflowX / cropperState.options.aspectRatio;
+      }
+      // Ensure y2 is within bounds
+      if (cropperPosition.y2 > cropperState.maxSize().height) {
+        cropperPosition.y2 = cropperState.maxSize().height;
       }
       break;
     case 'center':
@@ -238,9 +254,14 @@ export function checkAspectRatio(position: string, cropperPosition: CropperPosit
         cropperPosition.y1 += (overflowY2 * cropperState.options.aspectRatio) > overflowX2 ? overflowY2 : overflowX2 / cropperState.options.aspectRatio;
         cropperPosition.y2 -= (overflowY1 * cropperState.options.aspectRatio) > overflowX1 ? overflowY1 : overflowX1 / cropperState.options.aspectRatio;
       }
+      // Ensure bounds are respected
+      if (cropperPosition.y2 > cropperState.maxSize().height) {
+        cropperPosition.y2 = cropperState.maxSize().height;
+      }
       break;
   }
-  return cropperPosition;
+  // Final safety check to ensure cropper position is within bounds
+  return checkCropperWithinMaxSizeBounds(cropperPosition, cropperState, false);
 }
 
 export function getClientX(event: Event | BasicEvent | TouchEvent): number {

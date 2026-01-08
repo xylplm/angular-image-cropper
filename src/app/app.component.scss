@@ -141,7 +141,7 @@ details {
 /* Cropper & Controls Container */
 .cropper-and-controls {
   display: grid;
-  grid-template-columns: 1fr 260px;
+  grid-template-columns: 1fr 300px;
   gap: 12px;
   background: white;
   border-radius: 6px;
@@ -167,13 +167,13 @@ details {
 }
 
 image-cropper {
-  max-height: 500px;
+  height: 100%;
   width: 100%;
   display: block;
 }
 
 .cropper-wrapper {
-  min-height: 300px;
+  height: 100%;
   position: relative;
   background-color: #fafafa;
   display: flex;
@@ -182,7 +182,7 @@ image-cropper {
 }
 
 .placeholder-wrapper {
-  min-height: 300px;
+  height: 100%;
   background-color: #fafafa;
   border-radius: 6px;
   display: flex;

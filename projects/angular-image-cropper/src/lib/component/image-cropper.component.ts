@@ -68,7 +68,7 @@ export class ImageCropperComponent implements OnChanges, OnInit, OnDestroy {
   imageVisible = false;
 
   @ViewChild('wrapper', {static: true}) wrapper!: ElementRef<HTMLDivElement>;
-  @ViewChild('sourceImage', {static: false}) sourceImage!: ElementRef<HTMLDivElement>;
+  @ViewChild('sourceImage', {static: false}) sourceImage!: ElementRef<HTMLImageElement>;
 
   @Input() imageChangedEvent?: Event | null;
   @Input() imageURL?: string;
@@ -284,7 +284,12 @@ export class ImageCropperComponent implements OnChanges, OnInit, OnDestroy {
   }
 
   private sourceImageLoaded(): boolean {
-    return this.sourceImage?.nativeElement?.offsetWidth > 1;
+    const img = this.sourceImage?.nativeElement;
+    if (!img) {
+      return false;
+    }
+    // 检查图片是否完全加载且有有效的原始尺寸
+    return img.complete && img.naturalWidth > 0 && img.naturalHeight > 0;
   }
 
   @HostListener('window:resize')
@@ -480,10 +485,49 @@ export class ImageCropperComponent implements OnChanges, OnInit, OnDestroy {
     this.moveStart = undefined;
   }
 
+  // 设置裁剪框的最大尺寸（根据容器和图片实际尺寸）
   private setMaxSize(): void {
     if (this.sourceImage) {
-      const sourceImageStyle = getComputedStyle(this.sourceImage.nativeElement);
-      this.state.setMaxSize(parseFloat(sourceImageStyle.width), parseFloat(sourceImageStyle.height));
+      const sourceImageElement = this.sourceImage.nativeElement;
+      
+      // 获取图片实际渲染的尺寸
+      const sourceImageStyle = getComputedStyle(sourceImageElement);
+      let renderedWidth = parseFloat(sourceImageStyle.width);
+      let renderedHeight = parseFloat(sourceImageStyle.height);
+      
+      // 获取宿主元素（image-cropper 组件本身）的尺寸
+      const hostElement = (this.wrapper?.nativeElement?.parentElement) as HTMLElement;
+      let containerWidth = 0;
+      let containerHeight = 0;
+      
+      if (hostElement) {
+        const hostRect = hostElement.getBoundingClientRect();
+        // 减去 padding（每边 5px = 总共 10px）
+        containerWidth = hostRect.width - 10;
+        containerHeight = hostRect.height - 10;
+      }
+      
+      // 备选方案：使用 wrapper 元素的尺寸
+      if (containerWidth === 0 || containerHeight === 0) {
+        const wrapperElement = this.wrapper?.nativeElement;
+        if (wrapperElement) {
+          const rect = wrapperElement.getBoundingClientRect();
+          containerWidth = rect.width;
+          containerHeight = rect.height;
+        }
+      }
+      
+      // 如果尺寸无效，暂时不设置 maxSize，等待下一次重试
+      if (renderedWidth === 0 || renderedHeight === 0 || containerWidth === 0 || containerHeight === 0) {
+        return;
+      }
+      
+      // 使用图片渲染尺寸，但确保不超过容器尺寸
+      const finalWidth = Math.min(renderedWidth, containerWidth);
+      const finalHeight = Math.min(renderedHeight, containerHeight);
+      
+      this.state.setMaxSize(finalWidth, finalHeight);
+      // 计算图片居中时的左边距
       this.marginLeft = this.sanitizer.bypassSecurityTrustStyle('calc(50% - ' + this.state.maxSize().width / 2 + 'px)');
     }
   }
