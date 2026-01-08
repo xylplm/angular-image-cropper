@@ -34,7 +34,7 @@
 
 ## 项目说明
 
-本项目是 [ngx-image-cropper](https://github.com/Mawi137/ngx-image-cropper) 的 fork 版本。原始项目已不再积极维护，此版本基于社区需求继续开发和维护。
+本项目是基于 [ngx-image-cropper](https://github.com/Mawi137/ngx-image-cropper) 二次开发。由于原始项目不是基于 Angular 最新标准，无法满足需求。因此对它进行了新的改造。
 
 该包允许在 Angular 应用中使用图片裁剪功能。它提供了一个用户友好的界面来选择和裁剪图片，支持各种定制选项。
 
@@ -311,12 +311,7 @@ export class ImagesModule {}
 
 | Angular 版本 | 支持 |
 | :---: | :---: |
-| 18+ | ✅ |
-| 17 | ✅ |
-| 16 | ✅ |
-| 15 | ✅ |
-| 14 | ✅ |
-| 13 | ✅ |
+| 20+ | ✅ |
 
 ## 替代方案
 

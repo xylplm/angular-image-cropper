@@ -31,7 +31,7 @@
 
 ## Description
 
-This project is a fork of [ngx-image-cropper](https://github.com/Mawi137/ngx-image-cropper). The original project is no longer actively maintained, so this version continues development and maintenance based on community needs.
+This project is a secondary development based on [ngx-image-cropper](https://github.com/Mawi137/ngx-image-cropper). Since the original project was not built on the latest Angular standards and could not meet the requirements, it has been comprehensively refactored.
 
 This package allows you to use an image cropper in your Angular applications. It provides a user-friendly interface for selecting and cropping images with various customization options.
 
@@ -44,9 +44,9 @@ This package allows you to use an image cropper in your Angular applications. It
 - 🎯 Intuitive image cropping interface
 - 📐 Customizable aspect ratios and dimensions
 - 🎨 Easy to style with CSS variables
-- �?Accessibility support
+- ♿ Accessibility support
 - 📦 Tree-shakeable - import only what you need
-- �?Lightweight and performant
+- ⚡ Lightweight and performant
 - 🎭 Works with Standalone Components & NgModule
 
 ## Installation
@@ -308,12 +308,7 @@ To gain access to the image cropper's methods use `@ViewChild(ImageCropperCompon
 
 | Angular Version | Supported |
 | :---: | :---: |
-| 18+ | �?|
-| 17 | �?|
-| 16 | �?|
-| 15 | �?|
-| 14 | �?|
-| 13 | �?|
+| 20+ | ✅ |
 
 ## Alternatives
 
