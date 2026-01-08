@@ -1,95 +1,231 @@
-<input [ngModel]="imageURL()" (ngModelChange)="imageURL.set($event)" placeholder="URL to load image" type="text" />
-<input type="file" (change)="fileChangeEvent($event)" accept="image/*" />
-<br />
-<br />
-<section>
-  <label for="cropperStaticWidth">Cropper Static Width:</label>
-  <input id="cropperStaticWidth" type="number" (keyup)="debounce($event)" />
-  <label for="cropperMinWidth">Cropper Min Width:</label>
-  <input id="cropperMinWidth" type="number" (keyup)="debounce($event)"/>
-  <label for="cropperMaxWidth">Cropper Max Width:</label>
-  <input id="cropperMaxWidth" type="number" (keyup)="debounce($event)"/>
-  <label for="resizeToWidth">Resisze to Width:</label>
-  <input id="resizeToWidth" type="number" (keyup)="debounce($event)"/>
-  <span></span>
-  <label for="cropperStaticHeight">Cropper Static Height:</label>
-  <input id="cropperStaticHeight" type="number" (keyup)="debounce($event)" />
-  <label for="cropperMinHeight">Cropper Min Height:</label>
-  <input id="cropperMinHeight" type="number" (keyup)="debounce($event)"/>
-  <label for="cropperMaxHeight">Cropper Max Height:</label>
-  <input id="cropperMaxHeight" type="number" (keyup)="debounce($event)"/>
-  <label for="resizeToHeight">Resize to Height:</label>
-  <input id="resizeToHeight" type="number" (keyup)="debounce($event)"/>
-</section>
-<br />
-<button (click)="toggleMaintainAspectRatio()" [class.enabled]="maintainAspectRatio()">Maintain Aspect Ratio</button>
-<button (click)="toggleAspectRatio()" [class.enabled]="maintainAspectRatio() || containWithinAspectRatio()">Aspect ratio: {{aspectRatioDisplay()}}</button>
-<button (click)="toggleContainWithinAspectRatio()" [class.enabled]="containWithinAspectRatio()">Fill Aspect Ratio</button>
-<button (click)="rotateLeft()">Rotate left</button>
-<button (click)="rotateRight()">Rotate right</button>
-<br />
-<br />
-<input [ngModel]="transform().rotate!" placeholder="Rotation" type="number" (ngModelChange)="updateRotation($event)" />
-<button (click)="zoomOut()">Zoom -</button>
-<button (click)="zoomIn()">Zoom +</button>
-<button (click)="moveLeft()">move left</button>
-<button (click)="moveRight()">move right</button>
-<button (click)="moveUp()">move up</button>
-<button (click)="moveDown()">move down</button>
-<button (click)="flipHorizontal()" [class.enabled]="transform().flipH">Flip horizontal</button>
-<button (click)="flipVertical()" [class.enabled]="transform().flipV">Flip vertical</button>
-<button (click)="toggleAllowMoveImage()" [class.enabled]="allowMoveImage()">Image panning</button>
-<br/>
-<br/>
-<button (click)="toggleHidden()" [class.hidden]="maintainAspectRatio()">Hidden</button>
-<button (click)="toggleDisabled()" [class.enabled]="disabled()">Disable</button>
-<button (click)="toggleHideResizeSquares()" [class.enabled]="hideResizeSquares()">Hide Resize Squares</button>
-<button (click)="toggleResetCropOnAspectRatioChange()" [class.enabled]="resetCropOnAspectRatioChange()">Reset Crop On Aspect Ratio Change</button>
-<button (click)="toggleBackgroundColor()" style="color:white" [style.background-color]="backgroundColor()">Background Color</button>
-<button (click)="test()">Random test</button>
-<button (click)="resetImage()">Reset image</button>
-<br/>
-<br/>
+<div class="app-container">
+  <!-- Header -->
+  <header class="app-header">
+    <h1>图片裁剪工具</h1>
+  </header>
 
-<div [style.display]="showCropper() ? null : 'none'" class="cropper-wrapper">
-  <image-cropper
-    [imageChangedEvent]="imageChangedEvent()"
-    [imageURL]="imageURL()"
-    [hidden]="hidden()"
-    [disabled]="disabled()"
-    [alignImage]="alignImage()"
-    [roundCropper]="roundCropper()"
-    [backgroundColor]="backgroundColor()"
-    imageAltText="Alternative image text"
-    [allowMoveImage]="allowMoveImage()"
-    [hideResizeSquares]="hideResizeSquares()"
-    [canvasRotation]="canvasRotation()"
-    [aspectRatio]="aspectRatio()"
-    [containWithinAspectRatio]="containWithinAspectRatio()"
-    [maintainAspectRatio]="maintainAspectRatio()"
-    [cropperStaticWidth]="cropperStaticWidth()"
-    [cropperStaticHeight]="cropperStaticHeight()"
-    [cropperMinWidth]="cropperMinWidth()"
-    [cropperMinHeight]="cropperMinHeight()"
-    [cropperMaxWidth]="cropperMaxWidth()"
-    [cropperMaxHeight]="cropperMaxHeight()"
-    [resizeToWidth]="resizeToWidth()"
-    [resizeToHeight]="resizeToHeight()"
-    [resetCropOnAspectRatioChange]="resetCropOnAspectRatioChange()"
-    [cropper]="cropper()"
-    (cropperChange)="cropper.set($event)"
-    [transform]="transform()"
-    (transformChange)="updateTransform($event)"
-    [onlyScaleDown]="true"
-    output="blob"
-    format="png"
-    (imageCropped)="imageCropped($event)"
-    (imageLoaded)="imageLoaded()"
-    (cropperReady)="cropperReady($event)"
-    (loadImageFailed)="loadImageFailed()"
-  ></image-cropper>
-  @if (loading()) {
-    <div class="loader">Loading...</div>
-  }
+  <!-- Main Content -->
+  <main class="app-main">
+    <!-- Input Section -->
+    <section class="card upload-section">
+      <h2>上传图片</h2>
+      <div class="upload-controls">
+        <input 
+          [ngModel]="imageURL()" 
+          (ngModelChange)="imageURL.set($event)" 
+          placeholder="输入图片 URL" 
+          type="text"
+          class="url-input" 
+        />
+        <label class="file-input-label">
+          <input type="file" (change)="fileChangeEvent($event)" accept="image/*" />
+          <span>选择文件</span>
+        </label>
+      </div>
+    </section>
+
+    <div class="content-wrapper">
+      <!-- Cropper & Controls Together -->
+      <div class="cropper-and-controls">
+        <!-- Cropper Preview -->
+        <div class="cropper-section">
+          @if (!showCropper()) {
+            <div class="placeholder-wrapper">
+              <div class="placeholder-content">
+                <div class="placeholder-icon">🖼️</div>
+                <p class="placeholder-text">请上传或输入图片 URL</p>
+                <p class="placeholder-hint">支持拖拽上传</p>
+              </div>
+            </div>
+          }
+          <div [style.display]="showCropper() ? null : 'none'" class="cropper-wrapper">
+            <image-cropper
+              [imageChangedEvent]="imageChangedEvent()"
+              [imageURL]="imageURL()"
+              [hidden]="hidden()"
+              [disabled]="disabled()"
+              [alignImage]="alignImage()"
+              [roundCropper]="roundCropper()"
+              [backgroundColor]="backgroundColor()"
+              imageAltText="图片预览"
+              [allowMoveImage]="allowMoveImage()"
+              [hideResizeSquares]="hideResizeSquares()"
+              [canvasRotation]="canvasRotation()"
+              [aspectRatio]="aspectRatio()"
+              [containWithinAspectRatio]="containWithinAspectRatio()"
+              [maintainAspectRatio]="maintainAspectRatio()"
+              [cropperStaticWidth]="cropperStaticWidth()"
+              [cropperStaticHeight]="cropperStaticHeight()"
+              [cropperMinWidth]="cropperMinWidth()"
+              [cropperMinHeight]="cropperMinHeight()"
+              [cropperMaxWidth]="cropperMaxWidth()"
+              [cropperMaxHeight]="cropperMaxHeight()"
+              [resizeToWidth]="resizeToWidth()"
+              [resizeToHeight]="resizeToHeight()"
+              [resetCropOnAspectRatioChange]="resetCropOnAspectRatioChange()"
+              [cropper]="cropper()"
+              (cropperChange)="cropper.set($event)"
+              [transform]="transform()"
+              (transformChange)="updateTransform($event)"
+              [onlyScaleDown]="true"
+              output="blob"
+              format="png"
+              (imageCropped)="imageCropped($event)"
+              (imageLoaded)="imageLoaded()"
+              (cropperReady)="cropperReady($event)"
+              (loadImageFailed)="loadImageFailed()"
+            ></image-cropper>
+            @if (loading()) {
+              <div class="loader">加载中...</div>
+            }
+          </div>
+        </div>
+
+        <!-- Controls Panel -->
+        <aside class="controls-panel">
+          <!-- Aspect Ratio -->
+          <section class="card control-card">
+            <h3>长宽比</h3>
+            <div class="button-group compact">
+              <button (click)="toggleMaintainAspectRatio()" [class.active]="maintainAspectRatio()" title="保持比例">
+                锁定
+              </button>
+              <button (click)="toggleAspectRatio()" [class.active]="maintainAspectRatio() || containWithinAspectRatio()" title="切换比例">
+                {{aspectRatioDisplay()}}
+              </button>
+              <button (click)="toggleContainWithinAspectRatio()" [class.active]="containWithinAspectRatio()" title="填充比例">
+                填充
+              </button>
+            </div>
+          </section>
+
+          <!-- Rotation -->
+          <section class="card control-card">
+            <h3>旋转</h3>
+            <div class="input-row">
+              <input 
+                id="rotation"
+                [ngModel]="transform().rotate!" 
+                placeholder="°" 
+                type="number" 
+                (ngModelChange)="updateRotation($event)" 
+              />
+            </div>
+            <div class="button-group compact">
+              <button (click)="rotateLeft()" title="左旋">↺</button>
+              <button (click)="rotateRight()" title="右旋">↻</button>
+            </div>
+          </section>
+
+          <!-- Flip -->
+          <section class="card control-card">
+            <h3>翻转</h3>
+            <div class="button-group compact">
+              <button (click)="flipHorizontal()" [class.active]="transform().flipH" title="水平翻转">⟷</button>
+              <button (click)="flipVertical()" [class.active]="transform().flipV" title="垂直翻转">⇅</button>
+            </div>
+          </section>
+
+          <!-- Zoom -->
+          <section class="card control-card">
+            <h3>缩放</h3>
+            <div class="button-group compact">
+              <button (click)="zoomOut()" title="缩小">−</button>
+              <button (click)="zoomIn()" title="放大">+</button>
+            </div>
+          </section>
+
+          <!-- Move -->
+          <section class="card control-card">
+            <h3>移动</h3>
+            <div class="direction-pad">
+              <button class="up" (click)="moveUp()" title="上移">↑</button>
+              <button class="left" (click)="moveLeft()" title="左移">←</button>
+              <button class="down" (click)="moveDown()" title="下移">↓</button>
+              <button class="right" (click)="moveRight()" title="右移">→</button>
+            </div>
+          </section>
+
+          <!-- Quick Settings -->
+          <section class="card control-card">
+            <h3>选项</h3>
+            <div class="button-group compact">
+              <button (click)="toggleAllowMoveImage()" [class.active]="allowMoveImage()" title="启用图片拖拽">拖拽</button>
+              <button (click)="toggleDisabled()" [class.active]="disabled()" title="禁用裁剪">锁定</button>
+              <button (click)="toggleHideResizeSquares()" [class.active]="hideResizeSquares()" title="隐藏调整点">隐藏</button>
+            </div>
+          </section>
+
+          <!-- Size Settings (Collapsed) -->
+          <details class="card control-card">
+            <summary><h3>尺寸设置</h3></summary>
+            <div class="form-grid compact-grid">
+              <div class="form-group">
+                <label for="cropperStaticWidth">固定宽</label>
+                <input id="cropperStaticWidth" type="number" (keyup)="debounce($event)" />
+              </div>
+              <div class="form-group">
+                <label for="cropperStaticHeight">固定高</label>
+                <input id="cropperStaticHeight" type="number" (keyup)="debounce($event)" />
+              </div>
+              <div class="form-group">
+                <label for="cropperMinWidth">最小宽</label>
+                <input id="cropperMinWidth" type="number" (keyup)="debounce($event)"/>
+              </div>
+              <div class="form-group">
+                <label for="cropperMinHeight">最小高</label>
+                <input id="cropperMinHeight" type="number" (keyup)="debounce($event)"/>
+              </div>
+              <div class="form-group">
+                <label for="cropperMaxWidth">最大宽</label>
+                <input id="cropperMaxWidth" type="number" (keyup)="debounce($event)"/>
+              </div>
+              <div class="form-group">
+                <label for="cropperMaxHeight">最大高</label>
+                <input id="cropperMaxHeight" type="number" (keyup)="debounce($event)"/>
+              </div>
+              <div class="form-group">
+                <label for="resizeToWidth">输出宽</label>
+                <input id="resizeToWidth" type="number" (keyup)="debounce($event)"/>
+              </div>
+              <div class="form-group">
+                <label for="resizeToHeight">输出高</label>
+                <input id="resizeToHeight" type="number" (keyup)="debounce($event)"/>
+              </div>
+            </div>
+          </details>
+
+          <!-- Advanced Settings (Collapsed) -->
+          <details class="card control-card">
+            <summary><h3>高级</h3></summary>
+            <div class="button-group compact">
+              <button (click)="toggleBackgroundColor()" style="color:white" [style.background-color]="backgroundColor()" title="更改背景">背景</button>
+              <button (click)="toggleResetCropOnAspectRatioChange()" [class.active]="resetCropOnAspectRatioChange()" title="比例变化时重置">重置</button>
+              <button (click)="toggleHidden()" [class.hidden]="maintainAspectRatio()" title="隐藏裁剪器">隐藏</button>
+            </div>
+            <div class="button-group compact">
+              <button (click)="test()" class="secondary-btn" title="随机测试">测试</button>
+              <button (click)="resetImage()" class="secondary-btn" title="重置图片">复位</button>
+            </div>
+          </details>
+        </aside>
+      </div>
+    </div>
+
+    <!-- Cropped Image Preview -->
+    <section class="card result-section">
+      <h2>裁剪结果</h2>
+      @if (!croppedImage()) {
+        <div class="result-placeholder">
+          <div class="placeholder-content">
+            <div class="placeholder-icon">✨</div>
+            <p class="placeholder-text">完成裁剪后在此显示</p>
+          </div>
+        </div>
+      }
+      <div [style.display]="croppedImage() ? null : 'none'" class="result-preview">
+        <img [src]="croppedImage()" [style.border]="croppedImage() ? '2px solid #007bff' : 'none'" alt="裁剪预览" />
+      </div>
+    </section>
+  </main>
 </div>
-<img [src]="croppedImage()" [style.border]="croppedImage() ? '1px solid black' : 'none'" />
