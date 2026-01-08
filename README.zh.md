@@ -40,7 +40,7 @@
 
 **快速链接：**
 - 📦 [NPM 包](https://www.npmjs.com/package/@luoxiao123/angular-image-cropper)
-- 🎨 [在线演示](https://stackblitz.com/edit/image-cropper)
+- 🎨 [在线演示](https://xylplm.github.io/angular-image-cropper/)
 - 📖 [原始库](https://github.com/xylplm/angular-image-cropper)
 
 **主要特性：**

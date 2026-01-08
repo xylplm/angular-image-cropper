@@ -37,7 +37,7 @@ This package allows you to use an image cropper in your Angular applications. It
 
 **Quick Links:**
 - 📦 [NPM Package](https://www.npmjs.com/package/@luoxiao123/angular-image-cropper)
-- 🎨 [Live Demo](https://stackblitz.com/edit/image-cropper)
+- 🎨 [Live Demo](https://xylplm.github.io/angular-image-cropper/)
 - 📖 [Original Library](https://github.com/xylplm/angular-image-cropper)
 
 **Features:**
