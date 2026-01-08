@@ -30,6 +30,12 @@
             "include": ["projects/angular-image-cropper/src/**/*.spec.ts"],
             "setupFiles": ["projects/angular-image-cropper/src/test.ts"]
           }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": ["projects/angular-image-cropper/**/*.ts"]
+          }
         }
       }
     },
@@ -99,6 +105,12 @@
             }
           },
           "defaultConfiguration": "development"
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": ["src/**/*.ts"]
+          }
         }
       }
     }
