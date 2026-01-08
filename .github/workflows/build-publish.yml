@@ -32,7 +32,8 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
-            const pkg = require('./projects/angular-image-cropper/package.json');
+            const fs = require('fs');
+            const pkg = JSON.parse(fs.readFileSync('./projects/angular-image-cropper/package.json', 'utf8'));
             core.exportVariable('VERSION', pkg.version);
 
       - name: Build Angular library
