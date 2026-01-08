@@ -1,6 +1,6 @@
 {
   "name": "@luoxiao123/angular-image-cropper",
-  "version": "21.0.1",
+  "version": "21.0.2",
   "description": "An image cropper components library for Angular applications",
   "type": "module",
   "keywords": [
