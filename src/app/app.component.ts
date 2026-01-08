@@ -7,14 +7,14 @@ import {
   ImageTransform
 } from 'angular-image-cropper';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
-import { NgIf } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss'],
-    imports: [NgIf, FormsModule, ImageCropperComponent]
+    imports: [FormsModule, ImageCropperComponent]
 })
 export class AppComponent {
   showCropper = false;

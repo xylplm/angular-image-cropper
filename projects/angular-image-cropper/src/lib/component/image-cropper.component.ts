@@ -31,7 +31,7 @@ import { LoadImageService } from '../services/load-image.service';
 import { getEventForKey, getInvertedPositionForKey, getPositionForKey } from '../utils/keyboard.utils';
 import { first, takeUntil } from 'rxjs/operators';
 import { fromEvent, merge, Subject } from 'rxjs';
-import { NgIf } from '@angular/common';
+
 import { BasicEvent } from '../interfaces/basic-event.interface';
 import {
   checkCropperPosition,
@@ -47,7 +47,7 @@ import {
     templateUrl: './image-cropper.component.html',
     styleUrls: ['./image-cropper.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [NgIf]
+    imports: []
 })
 export class ImageCropperComponent implements OnChanges, OnInit, OnDestroy {
 

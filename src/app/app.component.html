@@ -87,6 +87,8 @@
     (loadImageFailed)="loadImageFailed()"
     (transformChange)="transformChange($event)"
   ></image-cropper>
-  <div *ngIf="loading" class="loader">Loading...</div>
+  @if (loading) {
+    <div class="loader">Loading...</div>
+  }
 </div>
 <img [src]="croppedImage" [style.border]="croppedImage ? '1px solid black' : 'none'" />
